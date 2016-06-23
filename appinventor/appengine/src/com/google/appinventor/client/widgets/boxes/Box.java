@@ -36,8 +36,9 @@ import java.util.Map;
 /**
  * Abstract superclass for all boxes.
  *
- * <p>A box is a container widget. It automatically handles scrolling for
- * embedded widgets. Boxes can be resized, minimized and restored.
+ * <p>
+ * A box is a container widget. It automatically handles scrolling for embedded widgets. Boxes can
+ * be resized, minimized and restored.
  *
  */
 public abstract class Box extends HandlerPanel {
@@ -61,10 +62,10 @@ public abstract class Box extends HandlerPanel {
     /**
      * Creates a new box description.
      *
-     * @param type  type of box
-     * @param width  width of box in pixels
-     * @param height  height of box in pixels if not minimized
-     * @param minimized  indicates whether box is minimized
+     * @param type type of box
+     * @param width width of box in pixels
+     * @param height height of box in pixels if not minimized
+     * @param minimized indicates whether box is minimized
      */
     private BoxDescriptor(String type, int width, int height, boolean minimized) {
       this.type = type;
@@ -76,10 +77,10 @@ public abstract class Box extends HandlerPanel {
     /**
      * Creates a new box description.
      *
-     * @param type  type of box
-     * @param width  width of box in pixels
-     * @param height  height of box in pixels if not minimized
-     * @param minimized  indicates whether box is minimized
+     * @param type type of box
+     * @param width width of box in pixels
+     * @param height height of box in pixels if not minimized
+     * @param minimized indicates whether box is minimized
      */
     public BoxDescriptor(Class<? extends Box> type, int width, int height, boolean minimized) {
       this(type.getName(), width, height, minimized);
@@ -88,7 +89,7 @@ public abstract class Box extends HandlerPanel {
     /**
      * Returns the box type (for use by a {@link BoxRegistry}).
      *
-     * @return  box type
+     * @return box type
      */
     public String getType() {
       return type;
@@ -98,18 +99,16 @@ public abstract class Box extends HandlerPanel {
      * Encodes the box information into JSON format.
      */
     public String toJson() {
-      return "{" +
-            "\"" + NAME_TYPE + "\":" + JSONUtil.toJson(type) + "," +
-            "\"" + NAME_WIDTH + "\":" + JSONUtil.toJson(width) + "," +
-            "\"" + NAME_HEIGHT + "\":" + JSONUtil.toJson(height) + "," +
-            "\"" + NAME_MINIMIZED + "\":" + JSONUtil.toJson(minimized) +
-          "}";
+      return "{" + "\"" + NAME_TYPE + "\":" + JSONUtil.toJson(type) + "," + "\"" + NAME_WIDTH
+          + "\":" + JSONUtil.toJson(width) + "," + "\"" + NAME_HEIGHT + "\":"
+          + JSONUtil.toJson(height) + "," + "\"" + NAME_MINIMIZED + "\":"
+          + JSONUtil.toJson(minimized) + "}";
     }
 
     /**
      * Creates a new box descriptor from a JSON object.
      *
-     * @param object  box descriptor in JSON format
+     * @param object box descriptor in JSON format
      */
     public static BoxDescriptor fromJson(JSONObject object) {
       Map<String, JSONValue> properties = object.getProperties();
@@ -123,7 +122,7 @@ public abstract class Box extends HandlerPanel {
     /**
      * Returns the type of box from a JSON object.
      *
-     * @param object  box descriptor in JSON format
+     * @param object box descriptor in JSON format
      */
     public static String boxTypeFromJson(JSONObject object) {
       Map<String, JSONValue> properties = object.getProperties();
@@ -231,14 +230,14 @@ public abstract class Box extends HandlerPanel {
   /**
    * Creates a new box.
    *
-   * @param caption  box caption
-   * @param height  box initial height in pixel
-   * @param minimizable  indicates whether box can be minimized
-   * @param removable  indicates whether box can be closed/removed
+   * @param caption box caption
+   * @param height box initial height in pixel
+   * @param minimizable indicates whether box can be minimized
+   * @param removable indicates whether box can be closed/removed
    * @param startMinimized indicates whether box should always start minimized
    * @param bodyPadding indicates whether box should have padding
-   * @param highlightCaption indicates whether caption should be highlighted
-   *                         until user has "seen" it (interacts with the box)
+   * @param highlightCaption indicates whether caption should be highlighted until user has "seen"
+   *        it (interacts with the box)
    */
   protected Box(String caption, int height, boolean minimizable, boolean removable,
       boolean startMinimized, boolean bodyPadding, boolean highlightCaption) {
@@ -266,8 +265,8 @@ public abstract class Box extends HandlerPanel {
     Images images = Ode.getImageBundle();
 
     if (removable) {
-      PushButton closeButton = Ode.createPushButton(images.boxClose(), MESSAGES.hdrClose(),
-          new ClickHandler() {
+      PushButton closeButton =
+          Ode.createPushButton(images.boxClose(), MESSAGES.hdrClose(), new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
               // TODO(user) - remove the box
@@ -279,11 +278,24 @@ public abstract class Box extends HandlerPanel {
           (closeButton.getOffsetWidth() + HEADER_CONTROL_PADDING) + "px");
     }
 
+    if (caption.equals(MESSAGES.viewerBoxCaption())) {
+      PushButton note =
+          Ode.createPushButton(images.noteicon(), MESSAGES.hdrClose(), new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+              // TODO(user) - remove the box
+              Window.alert("Not implemented yet!");
+            }
+          });
+      headerContainer.add(note, DockPanel.LINE_END);
+      headerContainer.setCellWidth(note, (note.getOffsetWidth() + HEADER_CONTROL_PADDING) + "px");
+    }
+    
     if (!minimizable) {
       minimizeButton = null;
     } else {
-      minimizeButton = Ode.createPushButton(images.boxMinimize(), MESSAGES.hdrMinimize(),
-          new ClickHandler() {
+      minimizeButton =
+          Ode.createPushButton(images.boxMinimize(), MESSAGES.hdrMinimize(), new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
               if (isMinimized()) {
@@ -298,16 +310,18 @@ public abstract class Box extends HandlerPanel {
           (minimizeButton.getOffsetWidth() + HEADER_CONTROL_PADDING) + "px");
     }
 
-    if (minimizable || removable) {
-      menuButton = Ode.createPushButton(images.boxMenu(), MESSAGES.hdrSettings(),
-          new ClickHandler() {
+    if (minimizable || removable)
+
+    {
+      menuButton =
+          Ode.createPushButton(images.boxMenu(), MESSAGES.hdrSettings(), new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
               final ContextMenu contextMenu = new ContextMenu();
               contextMenu.addItem(MESSAGES.cmMinimize(), new Command() {
                 @Override
                 public void execute() {
-                  if (! isMinimized()) {
+                  if (!isMinimized()) {
                     minimize();
                   }
                 }
@@ -343,8 +357,8 @@ public abstract class Box extends HandlerPanel {
                 @Override
                 public void setPosition(int offsetWidth, int offsetHeight) {
                   // SouthEast
-                  int left = menuButton.getAbsoluteLeft() + menuButton.getOffsetWidth()
-                      - offsetWidth;
+                  int left =
+                      menuButton.getAbsoluteLeft() + menuButton.getOffsetWidth() - offsetWidth;
                   int top = menuButton.getAbsoluteTop() + menuButton.getOffsetHeight();
                   contextMenu.setPopupPosition(left, top);
                 }
@@ -399,8 +413,8 @@ public abstract class Box extends HandlerPanel {
   /**
    * Sets the resizing behavior of the box.
    *
-   * @param variableHeightBoxes  indicates whether the box height will be
-   *                             updated upon layout resize operations
+   * @param variableHeightBoxes indicates whether the box height will be updated upon layout resize
+   *        operations
    */
   public void setVariableHeightBoxes(boolean variableHeightBoxes) {
     this.variableHeightBoxes = variableHeightBoxes;
@@ -409,7 +423,7 @@ public abstract class Box extends HandlerPanel {
   /**
    * Shows the given widget in the box.
    *
-   * @param w  widget to show
+   * @param w widget to show
    */
   public void setContent(Widget w) {
     body.setWidget(w);
@@ -418,7 +432,7 @@ public abstract class Box extends HandlerPanel {
   /**
    * Sets the given caption for the box.
    *
-   * @param caption  box caption to show
+   * @param caption box caption to show
    */
   public void setCaption(String caption) {
     if (highlightCaption) {
@@ -431,19 +445,18 @@ public abstract class Box extends HandlerPanel {
   /**
    * Returns the box header.
    *
-   * @return  box header widget
+   * @return box header widget
    */
   Widget getHeader() {
     return header;
   }
 
   /**
-   * Invoked upon resizing of the box by the layout. Box height will remain
-   * unmodified.
+   * Invoked upon resizing of the box by the layout. Box height will remain unmodified.
    *
    * @see Layout#onResize(int, int)
    *
-   * @param width  new column width for box in pixel
+   * @param width new column width for box in pixel
    */
   protected void onResize(int width) {
     onResize(width, height);
@@ -454,8 +467,8 @@ public abstract class Box extends HandlerPanel {
    *
    * @see Layout#onResize(int, int)
    *
-   * @param width  new column width for box in pixel
-   * @param height  new column height for box in pixel
+   * @param width new column width for box in pixel
+   * @param height new column height for box in pixel
    */
   protected void onResize(int width, int height) {
     this.width = width;
@@ -486,7 +499,7 @@ public abstract class Box extends HandlerPanel {
   /**
    * Restores the box layout.
    *
-   * @param bd  box descriptor with layout settings of box
+   * @param bd box descriptor with layout settings of box
    */
   public void restoreLayoutSettings(BoxDescriptor bd) {
     restoreHeight = bd.height;
@@ -502,7 +515,7 @@ public abstract class Box extends HandlerPanel {
   /**
    * Returns box layout settings.
    *
-   * @return  box layout settings
+   * @return box layout settings
    */
   public BoxDescriptor getLayoutSettings() {
     return new BoxDescriptor(getClass().getName(), width, restoreHeight, isMinimized());
