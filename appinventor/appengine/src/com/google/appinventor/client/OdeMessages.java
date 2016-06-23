@@ -2375,6 +2375,10 @@ public interface OdeMessages extends Messages {
   @DefaultMessage("SoundRecorder")
   @Description("")
   String soundRecorderComponentPallette();
+  
+  @DefaultMessage("Add a note to your project!")
+  @Description("Text displayed when the noteIcon is displayed.")
+  String noteIcon();
 
   @DefaultMessage("Voting")
   @Description("")

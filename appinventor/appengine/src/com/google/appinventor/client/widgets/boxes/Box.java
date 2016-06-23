@@ -280,13 +280,14 @@ public abstract class Box extends HandlerPanel {
 
     if (caption.equals(MESSAGES.viewerBoxCaption())) {
       PushButton note =
-          Ode.createPushButton(images.noteicon(), MESSAGES.hdrClose(), new ClickHandler() {
+          Ode.createPushButton(images.noteicon(), MESSAGES.noteIcon(), new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
               // TODO(user) - remove the box
               Window.alert("Not implemented yet!");
             }
           });
+      note.setStyleName("note-button");
       headerContainer.add(note, DockPanel.LINE_END);
       headerContainer.setCellWidth(note, (note.getOffsetWidth() + HEADER_CONTROL_PADDING) + "px");
     }

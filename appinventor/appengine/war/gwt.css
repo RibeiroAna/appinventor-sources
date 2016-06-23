@@ -68,6 +68,12 @@ a, a:visited, a:hover {
   border: 1px outset #ccc;
 }
 
+.note-button {
+  background-color: none;
+  margin-right: 20px;
+  margin-top: 7px;
+}
+
 .gwt-CheckBox {
 }
 .gwt-CheckBox-disabled {

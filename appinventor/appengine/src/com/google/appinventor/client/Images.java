@@ -515,7 +515,7 @@ public interface Images extends Resources {
   ImageResource proximitysensor();
   
   /**
-   * Designer palette item: proximitysensor component
+   * Note icon displayed in Viewer.
    */
   @Source("com/google/appinventor/images/noteicon.png")
   ImageResource noteicon();
